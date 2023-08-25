@@ -1,23 +1,24 @@
 ﻿using System.Text;
 
-[TestClass]
-public class OneTimePadAttackTests
+namespace SimpleCryptoLib.Tests
 {
-    [TestMethod]
-    public void TestRevealMessageAttack()
+    [TestClass]
+    public class OneTimePadAttackTests
     {
-        string predictableMessage = "STATUS: ALL GOOD.";
-        string confidentialMessage = "SECRET: LAUNCH 12PM";
+        [TestMethod]
+        public void TestRevealMessageAttack()
+        {
+            string predictableMessage = "STATUS";
+            string confidentialMessage = "SECRET";
 
-        // In a real-world scenario, the key should NEVER be reused.
-        // But for the sake of this demonstration, we're doing just that.
-        byte[] key = OneTimePad.GenerateRandomKey(Encoding.UTF8.GetBytes(predictableMessage).Length);
+            byte[] key = OneTimePad.GenerateRandomKey(Encoding.UTF8.GetBytes(predictableMessage).Length);
 
-        byte[] predictableCiphertext = OneTimePad.Encrypt(Encoding.UTF8.GetBytes(predictableMessage), key);
-        byte[] targetCiphertext = OneTimePad.Encrypt(Encoding.UTF8.GetBytes(confidentialMessage), key);
+            byte[] predictableCiphertext = OneTimePad.Encrypt(Encoding.UTF8.GetBytes(predictableMessage), key);
+            byte[] targetCiphertext = OneTimePad.Encrypt(Encoding.UTF8.GetBytes(confidentialMessage), key);
 
-        string revealedMessage = OneTimePadAttack.RevealMessageUsingPredictableMessage(predictableCiphertext, targetCiphertext, predictableMessage);
+            string revealedMessage = OneTimePadAttack.RevealMessageUsingPredictableMessage(predictableCiphertext, targetCiphertext, predictableMessage);
 
-        Assert.AreEqual(confidentialMessage, revealedMessage);
+            Assert.AreEqual(confidentialMessage, revealedMessage);
+        }
     }
 }

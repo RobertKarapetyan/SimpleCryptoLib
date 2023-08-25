@@ -1,32 +1,35 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Text;
 
-[TestClass]
-public class OneTimePadTests
+namespace SimpleCryptoLib.Tests
 {
-    [TestMethod]
-    public void TestEncryptionAndDecryption()
+    [TestClass]
+    public class OneTimePadTests
     {
-        string plaintext = "Hello, World!";
-        byte[] plaintextBytes = Encoding.UTF8.GetBytes(plaintext);
+        [TestMethod]
+        public void TestEncryptionAndDecryption()
+        {
+            string plaintext = "Hello, World!";
+            byte[] plaintextBytes = Encoding.UTF8.GetBytes(plaintext);
 
-        byte[] key = OneTimePad.GenerateRandomKey(plaintextBytes.Length);
-        byte[] encrypted = OneTimePad.Encrypt(plaintextBytes, key);
-        byte[] decrypted = OneTimePad.Decrypt(encrypted, key);
+            byte[] key = OneTimePad.GenerateRandomKey(plaintextBytes.Length);
+            byte[] encrypted = OneTimePad.Encrypt(plaintextBytes, key);
+            byte[] decrypted = OneTimePad.Decrypt(encrypted, key);
 
-        string decryptedString = Encoding.UTF8.GetString(decrypted);
+            string decryptedString = Encoding.UTF8.GetString(decrypted);
 
-        Assert.AreEqual(plaintext, decryptedString);
-    }
+            Assert.AreEqual(plaintext, decryptedString);
+        }
 
-    [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
-    public void TestMismatchedKeyLength()
-    {
-        string plaintext = "Hello, World!";
-        byte[] plaintextBytes = Encoding.UTF8.GetBytes(plaintext);
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestMismatchedKeyLength()
+        {
+            string plaintext = "Hello, World!";
+            byte[] plaintextBytes = Encoding.UTF8.GetBytes(plaintext);
 
-        byte[] shortKey = OneTimePad.GenerateRandomKey(5);
-        OneTimePad.Encrypt(plaintextBytes, shortKey);
+            byte[] shortKey = OneTimePad.GenerateRandomKey(5);
+            OneTimePad.Encrypt(plaintextBytes, shortKey);
+        }
     }
 }
