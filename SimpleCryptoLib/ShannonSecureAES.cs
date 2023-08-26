@@ -5,10 +5,9 @@ namespace SimpleCryptoLib
 {
     public class ShannonSecureAES
     {
-        private static readonly int keySize = 256; // in bits
-        private static readonly int blockSize = 128; // in bits
+        private static readonly int keySize = 256; 
+        private static readonly int blockSize = 128; 
 
-        // Encrypt using AES
         public byte[] Encrypt(string plainText, string key)
         {
             using (Aes aes = Aes.Create())
@@ -30,7 +29,6 @@ namespace SimpleCryptoLib
             }
         }
 
-        // Decrypt using AES
         public string Decrypt(byte[] cipherBytes, string key)
         {
             using (Aes aes = Aes.Create())
@@ -51,7 +49,6 @@ namespace SimpleCryptoLib
 
         private byte[] GetKeyBytes(string key)
         {
-            // Ensuring key is exactly 256 bits or 32 bytes
             if (key.Length > 32)
                 return Encoding.UTF8.GetBytes(key.Substring(0, 32));
             else
