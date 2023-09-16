@@ -9,7 +9,6 @@ namespace SimpleCryptoLib.Tests
         [TestMethod]
         public void TestEcbIndCpa()
         {
-            // Plaintext
             var plaintext = "HelloHello"; 
             var key = new byte[16];
             var ciphertext1 = EncryptEcb(plaintext, key);
@@ -21,7 +20,6 @@ namespace SimpleCryptoLib.Tests
         [TestMethod]
         public void TestCbcIndCpa()
         {
-            // Plaintext
             var plaintext = "Hello World";
             var key = new byte[16];
 
@@ -29,14 +27,12 @@ namespace SimpleCryptoLib.Tests
             var iv1 = new byte[16];
             var iv2 = new byte[16];
 
-            // Generate random IVs
             rng.GetBytes(iv1);
             rng.GetBytes(iv2);
 
             var ciphertext1 = EncryptCbc(plaintext, key, iv1);
             var ciphertext2 = EncryptCbc(plaintext, key, iv2);
 
-            // Check if CBC is IND-CPA secure (it should be, for distinct IVs)
             Assert.AreNotEqual(ciphertext1, ciphertext2);
         }
 
